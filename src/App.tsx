@@ -14,6 +14,14 @@ function App() {
         {id: v1(), title: 'Redux', isDone: false}
     ])
 
+    function changeTaskStatus(taskId: string, isDone: boolean) {
+        let changingTask = tasks.find(t => t.id === taskId)
+        if (changingTask) {
+            changingTask.isDone = isDone
+        }
+        setTasks([...tasks])
+    }
+
     let [filter, setFilter] = useState<FilterValueType>('all')
 
     function removeTask(id: string) {
@@ -44,7 +52,8 @@ function App() {
                   tasks={filteredTasks}
                   removeTask={removeTask}
                   changeFilter={changeFilter}
-                  addTask={addTask}/>
+                  addTask={addTask}
+                  changeTaskStatus={changeTaskStatus}/>
     </div>;
 }
 
