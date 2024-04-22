@@ -1,31 +1,31 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
 
 type AddItemFormPropsType = {
-    addItem: (newTaskTitle: string) => void
+    addItem: (newItemTitle: string) => void
 }
 
 export function AddItemForm(props: AddItemFormPropsType) {
 
-    let [newTaskTitle, setNewTaskTitle] = useState('')
+    let [newItemTitle, setNewItemTitle] = useState('')
 
     const onChangeNewTaskTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setNewTaskTitle(e.currentTarget.value)
+        setNewItemTitle(e.currentTarget.value)
     }
 
     const onKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
         setError(false)
         if (e.charCode === 13) {
-            props.addItem(newTaskTitle);
-            setNewTaskTitle('')
+            props.addItem(newItemTitle);
+            setNewItemTitle('')
         }
     }
 
     let [error, setError] = useState(false)
 
     const onClickAddTaskHandler = () => {
-        if (newTaskTitle.trim() !== '') {
-            props.addItem(newTaskTitle.trim())
-            setNewTaskTitle('')
+        if (newItemTitle.trim() !== '') {
+            props.addItem(newItemTitle.trim())
+            setNewItemTitle('')
         } else {
             setError(true)
         }
@@ -34,7 +34,7 @@ export function AddItemForm(props: AddItemFormPropsType) {
     return (
         <div>
             <input type="text"
-                   value={newTaskTitle}
+                   value={newItemTitle}
                    onChange={onChangeNewTaskTitleHandler}
                    onKeyPress={onKeyPressHandler}
                    className={error ? 'error' : ''}/>

@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import './App.css';
-import {Todolist} from './Todolist';
+import {TaskType, Todolist} from './Todolist';
 import {v1} from 'uuid';
 import {AddItemForm} from './AddItemForm';
 
@@ -12,12 +12,16 @@ type ToDoListsType = {
     filter: FilterValueType
 }
 
+type TasksObjType = {
+    [key: string]: TaskType[]
+}
+
 function App() {
 
     let toDoListId1 = v1()
     let toDoListId2 = v1()
 
-    let [tasksObj, setTasksObj] = useState({
+    let [tasksObj, setTasksObj] = useState<TasksObjType>({
         [toDoListId1]: [
             {id: v1(), title: 'CSS&HTML', isDone: true},
             {id: v1(), title: 'JS', isDone: true},
@@ -64,6 +68,12 @@ function App() {
         setTasksObj({...tasksObj})
     }
 
+    function addTodolist(newItemTitle: string) {
+        let newToDoList: ToDoListsType = {id: v1(), title: newItemTitle, filter: 'all'}
+        setTasksObj({...tasksObj, [newToDoList.id]: []})
+        setToDoLists([newToDoList, ...toDoLists])
+    }
+
     let [toDoLists, setToDoLists] = useState<ToDoListsType[]>([
         {id: toDoListId1, title: 'What to learn', filter: 'all'},
         {id: toDoListId2, title: 'What to buy', filter: 'all'}
@@ -71,7 +81,7 @@ function App() {
 
     return (
         <div className="App">
-            <AddItemForm addItem={()=>{}}/>
+            <AddItemForm addItem={addTodolist}/>
             {toDoLists.map((tdl) => {
                 let filteredTasks = tasksObj[tdl.id];
                 if (tdl.filter === 'active') {
