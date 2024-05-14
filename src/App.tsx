@@ -42,6 +42,14 @@ function App() {
         setTasksObj({...tasksObj})
     }
 
+    function changeTaskTitle(taskId: string, newTaskTitle: string, toDoListId: string) {
+        let changingTask = tasksObj[toDoListId].find(t => t.id === taskId)
+        if (changingTask) {
+            changingTask.title = newTaskTitle
+        }
+        setTasksObj({...tasksObj})
+    }
+
     function removeTask(id: string, toDoListId: string) {
         tasksObj[toDoListId] = tasksObj[toDoListId].filter(t => t.id !== id)
         setTasksObj({...tasksObj})
@@ -66,6 +74,14 @@ function App() {
         setToDoLists(toDoListsAfterDelete)
         delete tasksObj[toDoListId]
         setTasksObj({...tasksObj})
+    }
+
+    function changeTodoListTitle(toDoListId: string, newTodolistTitle: string) {
+        let changingTodolist = toDoLists.find(t => t.id === toDoListId)
+        if (changingTodolist) {
+            changingTodolist.title = newTodolistTitle
+            setToDoLists([...toDoLists])
+        }
     }
 
     function addTodolist(newItemTitle: string) {
@@ -99,8 +115,11 @@ function App() {
                     changeFilter={changeFilter}
                     addTask={addTask}
                     changeTaskStatus={changeTaskStatus}
+                    changeTaskTitle={changeTaskTitle}
                     filter={tdl.filter}
-                    removeTodolist={removeTodolist}/>
+                    removeTodolist={removeTodolist}
+                    changeTodoListTitle={changeTodoListTitle}
+                />
             })}
         </div>)
 }
